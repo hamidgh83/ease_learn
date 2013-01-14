@@ -1,0 +1,147 @@
+﻿CREATE TABLE `suggestions` (
+	`id` INT(10) NULL AUTO_INCREMENT,
+	`sender_email` VARCHAR(50) NULL DEFAULT NULL,
+	`sender_name` VARCHAR(50) NULL DEFAULT NULL COMMENT 'نام ارسال کننده و یا داروخانه',
+	`comment` TEXT NULL DEFAULT NULL,
+	PRIMARY KEY (`id`)
+)
+COMMENT='نظرات و پیشنهادات'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+
+
+ALTER TABLE `pharmacy`
+	ADD COLUMN `user_type` VARCHAR(24) NULL DEFAULT 'pharmacy' COMMENT 'pharmacy, admin, operator, visitor' AFTER `activity`;
+	
+	ALTER TABLE `pharmacy`
+	CHANGE COLUMN `user_type` `user_type` VARCHAR(24) NULL DEFAULT 'pharmacy' COMMENT 'pharmacy, company, admin, operator, visitor' AFTER `activity`;
+	
+	ALTER TABLE `pharmacy`
+	ADD COLUMN `ind_user_name` VARCHAR(24) NULL COMMENT 'نام ادمین-اپراتور-شرکت و یا ویزیتور' AFTER `user_type`;
+	
+	INSERT INTO `pharmacy` (`ph_email`, `password`, `user_type`, `ind_user_name`) VALUES ('admin@mydaroo.com', 'kadusmydaroo', 'admin', 'مدیر سایت');
+	
+	
+	ALTER TABLE `request_on_exchange`
+	ADD COLUMN `comment` TEXT NULL COMMENT 'توضیحات اپراتور در سایت' AFTER `admin_review`,
+	ADD COLUMN `added_on` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP COMMENT 'تاریخ ارسال درخواست' AFTER `comment`;
+
+===========================================================================================
+
+
+ALTER TABLE `drug_exchange`
+	ADD COLUMN `page_views` INT(11) NOT NULL DEFAULT '0' COMMENT 'تعداد بازدید' AFTER `added_by`;	
+
+===========================================================================================
+	
+	ALTER TABLE `drug_exchange`
+	ADD COLUMN `ex_unit` SMALLINT(6) NOT NULL COMMENT '1->adad   , 2->baste' AFTER `ex_count`;
+	
+	ALTER TABLE `drug_exchange`
+	CHANGE COLUMN `ex_unit` `ex_unit` SMALLINT(6) NOT NULL DEFAULT '1' COMMENT '1->adad   , 2->baste' AFTER `ex_count`;
+	
+	ALTER TABLE `request_on_exchange`
+	ADD COLUMN `sug_unit` SMALLINT NULL DEFAULT '1' COMMENT '1-> adad  , 2-> baste' AFTER `sug_count`;
+	
+===========================================================================================	
+	
+	ALTER TABLE `pharmacy`
+	ADD COLUMN `ph_technical` VARCHAR(50) NULL DEFAULT NULL COMMENT 'مسئول فنی' AFTER `ph_founder_mednum`;
+	
+	CREATE TABLE `pageviews` (
+	`id` INT(10) NULL AUTO_INCREMENT,
+	`page_url` VARCHAR(50) NULL,
+	`user_info_id` INT NULL,
+	`ip` VARCHAR(18) NULL,
+	`visit_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	PRIMARY KEY (`id`)
+)
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+update city_province SET province='تهران' WHERE province='-- تهران --'
+
+update city_province SET city_name='تهران' WHERE city_name=' --- تهران ---';
+
+update city_province SET city_name=' تهران' WHERE city_name='تهران';
+
+update city_province SET province=' تهران' WHERE province='تهران';
+
+===========================================================================================	
+
+ALTER TABLE `pharmacy`
+	ADD COLUMN `ph_technical_mednum` VARCHAR(50) NULL DEFAULT NULL COMMENT 'شماره نظام پزشکی مسئول فنی' AFTER `ph_technical`;
+
+	
+===========================================================================================	
+	
+ALTER TABLE `drug_exchange`
+	CHANGE COLUMN `status` `status` SMALLINT(1) NOT NULL COMMENT '1->active   , 2->pending,   3->reject,  4->delete by user,  5->delete by admin' AFTER `entry_date`;
+	
+	
+CREATE TABLE `comments` (
+	`id` INT(10) NULL AUTO_INCREMENT,
+	`comment` TEXT NULL,
+	`fkey` INT NULL COMMENT 'fkey from other tables',
+	`ext_table` VARCHAR(50) NULL COMMENT 'fkey from other tables',
+	PRIMARY KEY (`id`)
+)
+COMMENT='جهت ذخیره سازی انواع توضیحات در سایت'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+
+ALTER TABLE `comments`
+	ADD COLUMN `section_name` VARCHAR(50) NULL COMMENT 'section name' AFTER `ext_table`;
+	
+===========================================================================================	
+
+
+ALTER TABLE `pharmacy`
+	ADD COLUMN `zone` VARCHAR(50) NULL DEFAULT NULL COMMENT 'منطقه شهرداری' AFTER `ph_city_id`;
+
+	ALTER TABLE `pharmacy`
+	CHANGE COLUMN `zone` `ph_zone` VARCHAR(50) NULL DEFAULT NULL COMMENT 'منطقه شهرداری' AFTER `ph_city_id`;
+	
+===========================================================================================	
+	
+ALTER TABLE `drug_exchange`
+	CHANGE COLUMN `ex_con_percent` `ex_con_percent` TINYINT(4) NOT NULL DEFAULT '0' COMMENT 'درصد تخفیف' AFTER `ex_con_val`;
+
+ALTER TABLE `drug_exchange`
+	CHANGE COLUMN `ex_con_type` `ex_con_type` TINYINT(1) NOT NULL DEFAULT '1' COMMENT 'ayeze jensy->1  , disscaunt->2' AFTER `ex_unit_price`;
+
+===========================================================================================		
+	
+ALTER TABLE `pharmacy`
+	ADD COLUMN `send_fax_date` TIMESTAMP NULL DEFAULT NULL COMMENT 'تاریخ ارسال آخرین فکس' AFTER `ind_user_name`;
+	
+===========================================================================================		
+	
+	ALTER TABLE `pageviews`
+	ADD COLUMN `referer_url` VARCHAR(50) NULL DEFAULT NULL AFTER `ip`;
+	
+	ALTER TABLE `pageviews`
+	CHANGE COLUMN `referer_url` `referer_url` VARCHAR(50) NULL DEFAULT NULL AFTER `id`,
+	CHANGE COLUMN `user_info_id` `user_info_id` INT(11) NULL DEFAULT NULL AFTER `page_url`;
+
+===========================================================================================		
+
+
+CREATE TABLE `drug_lack_list` (
+	`id` INT(10) UNSIGNED NULL AUTO_INCREMENT,
+	`drug_name` VARCHAR(50) NULL,
+	`added_date` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
+	`status` TINYINT UNSIGNED NULL DEFAULT '1' COMMENT '1-> active , 2->delete by pharmacy,  3->delete by admin',
+	`name_is_in_bank` TINYINT UNSIGNED NULL DEFAULT '1' COMMENT '1-> yes,  0-> no',
+	PRIMARY KEY (`id`)
+)
+COMMENT='لیست کسری داروها'
+COLLATE='utf8_general_ci'
+ENGINE=InnoDB;
+
+
+
+ALTER TABLE `drug_lack_list`
+	ADD COLUMN `ph_id` INT NULL DEFAULT NULL AFTER `drug_name`;

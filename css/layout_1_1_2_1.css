@@ -1,0 +1,79 @@
+/**
+ * TOP IT SOLUTION
+ *
+*/
+
+
+
+/* Layout ================================================================================ */
+
+
+
+body {
+min-width: 1000px;
+
+	direction:ltr;
+
+	color:#353535;
+
+	font-size:0.8em;
+
+	line-height:1.3em;
+	
+	background: #fdfdfd;
+
+}
+
+.temp_container{
+        min-width: 960px;
+        max-width: 1270px;
+        margin: auto;
+        overflow: hidden;
+        padding: 0px 20px;
+        
+}
+
+#temp_header {
+	background-color: #3B5998;
+	
+	
+	overflow: hidden;
+}
+
+
+#temp_row1{
+        background: #ccc;
+        margin-bottom: 8px;
+        padding: 10px 0px;
+        overflow: hidden;
+
+}
+
+
+
+#temp_row1__section1 {
+	width:647px;
+	float:left;
+}
+#temp_row1__section2 {
+	width:317px;
+	
+}
+
+#temp_row2 #temp_row2__section1 {
+	width: 240px;
+	margin-right: 15px;
+	float: left;
+}
+
+#temp_row2 #temp_row2__section2{
+	width: 723px;
+	float: left;
+	margin-bottom:17px;
+}
+
+#temp_row2{
+	overflow:hidden;
+}
+
+/* ======================================================================================= */

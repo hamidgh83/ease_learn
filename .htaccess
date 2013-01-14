@@ -1,0 +1,24 @@
+ErrorDocument 404 /404.php
+Options +FollowSymlinks
+RewriteEngine on
+
+
+
+# ============================== START UP ==============================
+RewriteRule ^__ext/?([^~`!@#$%\^&\*\(\)+=\\\|\}\]\{\['":?.>,</]+)?$ __ext/$1 [NC,L]
+
+
+RewriteRule ^logout$ components/_logout.php [NC,L]
+
+# RewriteRule ^$ index.php [NC,L]
+
+RewriteRule ^action/([a-zA-Z0-9_-]+)?/?([a-zA-Z0-9_-]+)?/?([a-zA-Z0-9_-]+)?/?([a-zA-Z0-9_-]+)?/?$ control/ajaxaction.php?language=$1&action=$2&param1=$3&param2=$4&param3=$5 [NC,L]
+RewriteRule ^([a-zA-Z0-9_-]+)?/?([^~`!@#$%\^&\*\(\)+=\\\|\}\]\{\['":?.>,</]+)?/?([^~`!@#$%\^&\*\(\)+=\\\|\}\]\{\['":?.>,</]+)?/?([^~`!@#$%\^&\*\(\)+=\\\|\}\]\{\['":?.>,</]+)?$ loader.php?action=$1&p1=$2&p2=$3&p3=$4&p4=$5&p5=$6 [NC,L]
+
+
+
+PHP_FLAG output_buffering On 
+# PHP_FLAG display_errors off
+
+
+
