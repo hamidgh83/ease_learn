@@ -8,7 +8,8 @@
           url('/css/fonts/BBardiya.ttf') format('truetype'); 
 }
 @font-face {
-    font-family: 'BHoma';
+
+    font-family: 'BHoma';;
     src:url('/css/fonts/BHoma.eot?#') format('eot'),    
           url('/css/fonts/BHoma.woff') format('woff'),
           url('/css/fonts/BHoma.ttf') format('truetype'); 
