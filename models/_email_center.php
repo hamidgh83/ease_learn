@@ -8,7 +8,7 @@
 /**
  * Description of _email_center
  *
- * @author Hadi
+ * @author Hadi Hoseini
  */
 class _email_center {
 
